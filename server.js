@@ -14,5 +14,3 @@ app.listen(PORT, function(){
 })
 
 require("./route/html-route.js")(app);
-
-var my 
