@@ -35,9 +35,33 @@ function createNewRow(post){
     newPostCard.addClass("card");
     var newPostCardHeading = $("<div>");
     newPostCardHeading.addClass("card-header");
-    var deleteBtn = $("<button>");
-    deleteBtn.text("Upvote");
-    deleteBtn.addClass("upvote btn btn-primary");
+    var upvoteBtn = $("<button>");
+    upvoteBtn.text("Upvote");
+    upvoteBtn.addClass("upvote btn btn-primary");
+
+    var newPostTitle = $("<h2>");
+    var newPostDate = $("<small>");
+    var newPostCategory = $("<h5>");
+    newPostCategory.text(post.category);
+
+    var newPostCardBody = $("<div>");
+    newPostCardBody.addClass("card-body");
+    var newPostBody = $("<p>");
+    newPostTitle.text(post.title + " ");
+    newPostBody.text(post.body);
+
+    // need to make fomatted date with moments
+    newPostDate.text(post.createdAt);
+    newPostTitle.append(newPostDate);
+
+    newPostCardHeading.append(upvoteBtn);
+    newPostCardHeading.append(newPostTitle);
+    newPostCardHeading.append(newPostCategory);
+    newPostCardBody.append(newPostBody);
+    newPostCard.append(newPostCardHeading);
+    newPostCard.append(newPostCardBody);
+    newPostCard.data("post", post);
+    return newPostCard;
 
 
 }
