@@ -1,13 +1,19 @@
-module.exports = function(sequelize, DataTypes) {
-    var Location = sequelize.define("Location", {
-      area: DataTypes.STRING
+module.exports = function (sequelize, DataTypes) {
+  var Location = sequelize.define("Location", {
+    area: DataTypes.STRING
+  });
+
+  Location.associate = function (models) {
+    Location.hasMany(models.Post, {
+      onDelete: "cascade"
     });
-  
-    Location.associate = function(models) {
-      Location.hasMany(models.Post, {
-        onDelete: "cascade"
-      });
-    };
-  
-    return Location;
   };
+
+  Location.associate = function (models) {
+    Location.hasMany(models.Category, {
+      onDelete: "cascade"
+    });
+  };
+
+  return Location;
+};
