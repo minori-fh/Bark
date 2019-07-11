@@ -1,25 +1,28 @@
-$(document).ready(function(){
-    var postContainer = $(".post-container");
+$(document).ready(function () {
+  var postContainer = $(".post-container");
 
-function getPosts(category){
+  $(document).on("click", ".post", function  (){
+    console.log("sup")
+  })
+  function getPosts(category) {
     var categoryString = category || "";
 
     if (categoryString) {
-        categoryString = "/category/" + categoryString;
-      }
-      $.get("/api/posts" + categoryString, function(data) {
-        console.log("Posts", data);
-        posts = data;
-        if (!posts || !posts.length) {
-          displayEmpty();
-        }
-        else {
-          initializeRows();
-        }
-      });
-}
+      categoryString = "/category/" + categoryString;
+    }
+    // $.get("/api/posts" + categoryString, function (data) {
+    //   console.log("Posts", data);
+    //   posts = data;
+    //   if (!posts || !posts.length) {
+    //     displayEmpty();
+    //   }
+    //   else {
+    //     initializeRows(posts);
+    //   }
+    // });
+  }
 
-function initializeRows(){
+  function initializeRows(posts) {
     postContainer.empty();
 
     var postsToAdd = [];
@@ -27,10 +30,11 @@ function initializeRows(){
       postsToAdd.push(createNewRow(posts[i]));
     }
 
-    blogContainer.append(postsToAdd);
-};
+    postContainer.append(postsToAdd);
+  };
 
-function createNewRow(post){
+
+  function createNewRow(post) {
     //CREATE NEW post card
     var newPostCard = $("<div>");
     newPostCard.addClass("card");
@@ -57,7 +61,7 @@ function createNewRow(post){
 
     newPostTitle.text(post.title + " "); //grab title from post
     newPostBody.text(post.body); //grab body from post
-        // need to make fomatted date with moments
+    // need to make fomatted date with moments
     newPostDate.text(post.createdAt); //grab created at from post
     newPostTitle.append(newPostDate);
 
@@ -70,8 +74,8 @@ function createNewRow(post){
     newPostCard.append(newPostCardBody);
     newPostCard.data("post", post);
     return newPostCard;
-}
+  }
 
-getPosts();
+  getPosts();
 
 });
