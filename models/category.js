@@ -9,11 +9,5 @@ module.exports = function (sequelize, DataTypes) {
         });
     };
 
-    Category.associate = function (models) {
-        Category.belongsTo(models.Location, {
-            onDelete: "cascade"
-        });
-    };
-
     return Category;
 };
