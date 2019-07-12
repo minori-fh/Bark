@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>BARK</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <style>
+        #auth-form{
+            width: 30%; 
+        }
+    </style>
+</head>
+<body align="center !important">
+
+<h1>Welcome!</h1>
+
+<div class = "msg-wrap">
+    <p id = "msg"></p>
+</div>
+
+<form id = "auth-form">
+    <div class="form-group">
+        <label for="user-email exampleInputEmail1" aria-label="email">Email address</label>
+        <input type="email" class="form-control" id="user-email exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" type="email" name="email" required aria-required="true">
+        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+    </div>
+    <div class="form-group">
+        <label for="user-password exampleInputPassword1">Password</label>
+        <input type="password" class="form-control" id="user-password exampleInputPassword1" placeholder="Password" aria-label="password" type="password" name="local_pw" aria-required="true" required min-length=6>
+    </div>
+
+    <button type="submit" class="auth-btn btn btn-primary">Login</button>
+    <button type="submit" class="auth-btn btn btn-success">Signup</button>
+</form>
+    
+</body>
+</html>
