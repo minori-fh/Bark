@@ -1,0 +1,5 @@
+.widget-right {
+    width: 100% !important;
+    box-shadow: none !important;
+    border: 1px solid black;
+}
