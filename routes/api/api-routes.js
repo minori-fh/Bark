@@ -1,11 +1,11 @@
-var db = require("../models");
+var db = require("../../models");
 
 module.exports = function (app) {
 
-    app.get("/api/posts/locationId", function (req, res) {
+    app.get("/api/posts/:locationId", function (req, res) {
         db.Post.findAll({
             where: {
-                LocationId: req.params.LocationId
+                LocationId: req.params.locationId
             }
         }).then(function (dbPost) {
             res.json(dbPost);
@@ -15,7 +15,7 @@ module.exports = function (app) {
     app.get("/api/posts/:locationId/category/:categoryId", function (req, res) {
         db.Post.findAll({
             where: {
-                LocationId: req.params.LocationId,
+                LocationId: req.params.locationId,
                 CategoryId: req.params.categoryId
             }
         }).then(function (dbPost) {
