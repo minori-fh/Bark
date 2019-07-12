@@ -40,6 +40,63 @@
     <button type="submit" class="auth-btn btn btn-primary">Login</button>
     <button type="submit" class="auth-btn btn btn-success">Signup</button>
 </form>
+
+<script>
+    $('.auth-btn').click(function(e){
+        e.preventDefault();
+        $('#auth-form')[0].reportValidity();
+
+        var action = $(this).text().toLocaleLowerCase();
+
+        if($('#auth-form')[0].checkValidity()) {
+            var user = {
+                email: $('#user-email').val().trim(),
+                local_pw: $('#user-password').val().trim()
+            }
+            switch(action){
+                case 'signup':
+                    signup(user)
+                break;
+                case 'login':
+                    login(user)
+                break;
+                default:
+                    return
+            }
+        } else {
+            return
+        }
+    });
+
+    function signup(payload){
+        $.post('/api/auth/signup', payload, function(response){
+            console.log(response);
+            if(response.success){
+                location.reload();
+            }
+            else{
+                displayMSG(response);
+            }
+        });
+    }
+
+    function login(payload){
+        $.post('/api/auth/login', payload, function(response){
+            console.log(response);
+            if(response.success){
+                location.reload();
+            }
+            else{
+                displayMSG(response);
+            }
+        });
+    }
+    function displayMSG (response){
+        
+        $('#message').text(response.message)
+        $(".msg-wrap").slideDown("slow");
+    }
+</script>
     
 </body>
 </html>
