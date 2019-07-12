@@ -6,6 +6,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>BARK</title>
 
+    <script
+    src="https://code.jquery.com/jquery-3.4.1.min.js"
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+    crossorigin="anonymous"></script>
+    
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
     <style>
@@ -18,24 +23,76 @@
 
 <h1>Welcome!</h1>
 
-<div class = "msg-wrap">
-    <p id = "msg"></p>
+<div class="msg-wrap hide">
+    <p id="message"></p>
 </div>
 
-<form id = "auth-form">
-    <div class="form-group">
-        <label for="user-email exampleInputEmail1" aria-label="email">Email address</label>
-        <input type="email" class="form-control" id="user-email exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" type="email" name="email" required aria-required="true">
-        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-    </div>
-    <div class="form-group">
-        <label for="user-password exampleInputPassword1">Password</label>
-        <input type="password" class="form-control" id="user-password exampleInputPassword1" placeholder="Password" aria-label="password" type="password" name="local_pw" aria-required="true" required min-length=6>
-    </div>
+<form id="auth-form">
 
-    <button type="submit" class="auth-btn btn btn-primary">Login</button>
-    <button type="submit" class="auth-btn btn btn-success">Signup</button>
-</form>
-    
+        <label for="user-email" aria-label="email" >enter password (at least 6 characters)</label>
+        <input type="email" id="user-email" name="email" required aria-required="true">
+        <label for="user-password" aria-label="password">enter password (at least 6 characters)</label>
+        <input type="password" id="user-password" name="local_pw" required min-length=6 aria-required="true">
+        <button class="auth-btn">Signup</button>
+        <button class="auth-btn">login</button>
+    </form>
+
+<script>
+    $('.auth-btn').click(function(e){
+        e.preventDefault();
+        $('#auth-form')[0].reportValidity();
+
+        var action = $(this).text().toLocaleLowerCase();
+
+        if($('#auth-form')[0].checkValidity()) {
+            var user = {
+                email: $('#user-email').val(),
+                local_pw: $('#user-password').val()
+            }
+            switch(action){
+                case 'signup':
+                    signup(user)
+                break;
+                case 'login':
+                    login(user)
+                break;
+                default:
+                    return
+            }
+        } else {
+            return
+        }
+    });
+
+    function signup(payload){
+        $.post('/api/auth/signup', payload, function(response){
+            console.log(response);
+            if(response.success){
+                location.reload();
+            }
+            else{
+                displayMSG(response);
+            }
+        });
+    }
+
+    function login(payload){
+        $.post('/api/auth/login', payload, function(response){
+            console.log(response);
+            if(response.success){
+                location.reload();
+            }
+            else{
+                displayMSG(response);
+            }
+        });
+    }
+    function displayMSG (response){
+        
+        $('#message').text(response.message)
+        $(".msg-wrap").slideDown("slow");
+    }
+</script>
+   
 </body>
 </html>
