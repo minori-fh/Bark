@@ -9,13 +9,20 @@ var path = require("path");
 
 // }
 // ---------------------------
+
+console.log("asdf")
+
 router.get("/", function(req, res){
+    console.log("minori was here!")
     var auth = req.isAuthenticated();
-    console.log("hi hi")
+    console.log("hi hi");
+
     if(auth) {
-        res.sendFile(path.join(__dirname, "/../../public/index.html"));
+        res.sendFile(path.join(__dirname, "/../../public/home.html"));
+        console.log("auth")
     } else {
         res.sendFile(path.join(__dirname, "/../../public/login.html"));
+        console.log("else")
     }
 
 });

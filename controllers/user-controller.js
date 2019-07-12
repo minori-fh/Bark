@@ -4,7 +4,7 @@ var db = require("../models");
 module.exports = {
     find: function(req, res) {
         if (req.isAuthenticated()) {
-            db.User
+            db.Blogger
                 .findOne({ where: { uuid: req.session.passport.user }, include: [db.Account]})
                     .then(function(dbUser){res.json(dbUser)})
                     .catch(function(err){res.status(422).json(err)});
@@ -13,7 +13,7 @@ module.exports = {
     },
     update: function(req, res) {
         if (req.isAuthenticated()) {
-            db.User
+            db.Blogger
                 .update(req.body, { where: { uuid: req.session.passport.user } })
                 .then(function(dbUser){  res.json(dbUser)})
                 .catch(function(err){ res.status(422).json(err)});
@@ -22,7 +22,7 @@ module.exports = {
     },
     delete: function(req, res) {
         if (req.isAuthenticated()) {
-            db.User
+            db.Blogger
                 .destroy({ where: { uuid: req.session.passport.user } })
                 .then(function(deletedUsed) {
                     res.json(deletedUsed);

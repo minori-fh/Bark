@@ -2,7 +2,7 @@ var Sequelize = require("sequelize");
 var bcrypt    = require('bcrypt');
 
 module.exports = function(sequelize, DataTypes){
-    var User = sequelize.define("User", {
+    var Blogger = sequelize.define("Blogger", {
         uuid: {
           primaryKey: true,
           type: DataTypes.UUID,
@@ -32,22 +32,22 @@ module.exports = function(sequelize, DataTypes){
 
     // methods ======================
     // generating pw hash
-    User.generateHash = function(password) {
+    Blogger.generateHash = function(password) {
       return bcrypt.hashSync(password, bcrypt.genSaltSync(10), null);
     };
     
     // validate pw
-    User.prototype.validPassword = function(lpw, password) {
+    Blogger.prototype.validPassword = function(lpw, password) {
       return bcrypt.compareSync(lpw, password);
     };
 
     // accociations ======================
-    User.associate = function(models) {
-        User.hasOne(models.Account, {
+    Blogger.associate = function(models) {
+        Blogger.hasOne(models.Account, {
             foreignKey: "accountUUID",
             onDelete: "cascade"
         });
     };
 
-    return User;
+    return Blogger;
 }

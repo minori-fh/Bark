@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 var express = require("express");
 var passport = require("passport");
 var session = require("express-session");
@@ -31,9 +33,6 @@ app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 
 app.use(routes);
-
-require("./routes/api-routes.js")(app);
-require("./routes/html-routes.js")(app);
 
 // Launch server ==============
 db.sequelize.sync({ force: true }).then(function() {

@@ -6,7 +6,7 @@ module.exports = {
     if (req.isAuthenticated()) {
       console.log("loggedin")
       db.Account
-        .findOne({ where: { userUUID: req.session.passport.user }, include: [db.User] })
+        .findOne({ where: { userUUID: req.session.passport.user }, include: [db.Blogger] })
         .then(dbaccount => {
           if(dbaccount === null) {
             res.json({message:"please add an account"})

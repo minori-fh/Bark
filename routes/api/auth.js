@@ -1,5 +1,5 @@
-const router   = require("express").Router();
-const passport = require('passport');
+var router   = require("express").Router();
+var passport = require('passport');
 
 // ALL match with /api/auth....
 // =====================================
@@ -51,13 +51,12 @@ router.post('/signup', function(req, res, next){
         }
     
         else{
-          req.login(user, loginErr => {
+          req.login(user, function(loginErr)  {
             if (loginErr) {
               console.log("loginerr", loginErr)
               return next(loginErr);
             }
         
-    
             res.cookie('user_email', user.email );
             res.cookie('authenticated', "true" );
     

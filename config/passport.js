@@ -16,7 +16,7 @@ module.exports = function(passport) {
 
     // used to deserialize the user
     passport.deserializeUser((uuid, done) => {
-        db.User.findOne({where: {uuid: uuid}})
+        db.Blogger.findOne({where: {uuid: uuid}})
             .then(function(user){
                 if(user) {
                     done(null, user.get());
@@ -45,7 +45,7 @@ module.exports = function(passport) {
         // find a user whose email is the same as the forms email
         // we are checking to see if the user trying to login already exists
 
-        db.User.findOne({
+        db.Blogger.findOne({
             where: {
             	email: email
             }
@@ -60,9 +60,9 @@ module.exports = function(passport) {
                 } else {
                 // if there is no user with that email
                 // create the user
-                    db.User.create({
+                    db.Blogger.create({
                         email: req.body.email,
-                        local_pw: db.User.generateHash(local_pw)
+                        local_pw: db.Blogger.generateHash(local_pw)
                     })
                         .then(function(dbUser){
                             // send post back to render
@@ -93,7 +93,7 @@ module.exports = function(passport) {
     function(req, email, local_pw, done) { // callback with email and local_pw from our form
         // find a user whose email is the same as the forms email
         // we are checking to see if the user trying to login already exists
-        db.User.findOne({
+        db.Blogger.findOne({
             where: {
                 email: req.body.email
             }
