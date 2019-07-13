@@ -17,7 +17,7 @@
     <title>BARK!</title>
 </head>
 
-<body>
+<body id = "home-body">
 
     <nav id = "main-nav" class=" row navbar navbar-expand-sm navbar-light">
             <div class = "col-md-2" id = "logo-col">
@@ -34,7 +34,7 @@
                 <button type="button" class="actn-btn btn btn-light btn-small">Search</button>
             </div>
             <div class = "col-md-1">
-                <button type="button" class="actn-btn btn btn-light btn-small">Post</button>
+                <button type="button" class="actn-btn btn btn-light btn-small" data-toggle="modal" data-target="#exampleModal" >Post</button>
             </div>
         
     <!--
@@ -82,7 +82,7 @@
                     <div id="openweathermap-widget-15"></div>
                 </div>
             </div>
-            <nav class="navbar navbar-expand-sm navbar-light bg-light">
+            <nav id = "category-nav" class="navbar navbar-expand-sm">
                 <button class="navbar-toggler" type="button" data-toggle="collapse"
                     data-target="#navbarSupportedContent2" aria-controls="navbarSupportedContent" aria-expanded="false"
                     aria-label="Toggle navigation">
@@ -90,17 +90,17 @@
                 </button>
 
                 <div class="collapse navbar-collapse flex-column" id="navbarSupportedContent2">
-                    <div class="row">
+                    <div class="category row">
                         <div class="col-12">
                             <a class="nav-link" href="#">Category 1</a>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="category row">
                         <div class="col-12">
                             <a class="nav-link" href="#">Category 2</a>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="category row">
                         <div class="col-12">
                             <a class="nav-link" href="#">Category 3</a>
                         </div>
@@ -139,18 +139,14 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Make a Post</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" id = "modal-close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <form>
                         <div class="form-group">
-                            <label for="exampleFormControlInput1">User Name</label>
-                            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Bark394">
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleFormControlSelect1">Category</label>
+                            <label class = "modal-label" for="exampleFormControlSelect1">Category</label>
                             <select class="form-control" id="exampleFormControlSelect1">
                                 <option>1</option>
                                 <option>2</option>
@@ -160,7 +156,7 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="exampleFormControlTextarea1">Post/Text</label>
+                            <label class = "modal-label" for="exampleFormControlTextarea1">Post/Text</label>
                             <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
                         </div>
                     </form>
