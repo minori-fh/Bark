@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>BARK</title>
 
+    <link href="https://fonts.googleapis.com/css?family=Pacifico&display=swap" rel="stylesheet">
     <script
     src="https://code.jquery.com/jquery-3.4.1.min.js"
     integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
@@ -14,29 +15,27 @@
     
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-    <style>
-        #auth-form{
-            width: 30%; 
-        }
-    </style>
 </head>
-<body align="center !important" id = "login-body">
+<body id = "login-body">
 
-<img src = "assets/images/login_logo.png" width = "100px">
+<!-- <img src = "assets/images/login_logo.png" width = "100px"> -->
 
 <div class="msg-wrap hide">
     <p id="message"></p>
 </div>
 
 <form id="auth-form">
+    <h2>Welcome</h2>
 
-        <label for="user-email" aria-label="email" >enter password (at least 6 characters)</label>
-        <input type="email" id="user-email" name="email" required aria-required="true">
-        <label for="user-password" aria-label="password">enter password (at least 6 characters)</label>
-        <input type="password" id="user-password" name="local_pw" required min-length=6 aria-required="true">
-        <button class="auth-btn">Signup</button>
-        <button class="auth-btn">login</button>
-    </form>
+    <label for="user-email" aria-label="email" >Email </label><br>
+    <input type="email" id="user-email" name="email" required aria-required="true"><br>
+    <label for="user-password" aria-label="password">Password (at least 6 letters) </label><br>
+    <input type="password" id="user-password" name="local_pw" required min-length=6 aria-required="true"><br>
+    <div id = "buttons">
+        <button class="auth-btn" id = "signup">Signup</button>
+        <button class="auth-btn" id = "login">Login</button>
+    </div>
+</form>
 
 <script>
     $('.auth-btn').click(function(e){
