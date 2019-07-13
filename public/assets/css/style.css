@@ -4,6 +4,8 @@
     border: 1px solid black;
 }
 
+/* login css */
+
 #login-logo{
     text-align: center; 
     margin-top: 8%; 
@@ -116,4 +118,44 @@ h2{
               transform: rotateY(360deg);
     }
   }
+
+/* home css */
+#main-nav {
+    background-image: url("../images/nav_bg.png");
+    background-repeat: no-repeat;
+    background-size: cover; 
+}
+
+.actn-btn {
+    width: 100px; 
+    background-color:  rgba(255,255,255,0.2);
+    border: none; 
+    align-content: center; 
+    color: white;
+}
+
+#home-logo{
+    display: inline-block; 
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+   
+}
+
+#home-header{
+    margin-left: 53px;   
+    font-family: 'Pacifico', cursive;
+    font-size: 40px; 
+    margin-bottom: 0px !important; 
+    width: 30%; 
+    margin-right: 0px; 
+}
+
+#logo-col {
+    padding: 0px; 
+    padding-left: 2%; 
+}
+
+
   

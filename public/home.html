@@ -5,7 +5,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+    <link href="https://fonts.googleapis.com/css?family=Pacifico&display=swap" rel="stylesheet">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -19,28 +19,60 @@
 
 <body>
 
-    <nav class="navbar navbar-expand-sm navbar-light bg-light">
-        <a class="navbar-brand" href="#">BARK!</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="logout-btn nav-link" href="#">Sign Out</a>
-                </li>
-            </ul>
+    <nav id = "main-nav" class=" row navbar navbar-expand-sm navbar-light">
+            <div class = "col-md-2" id = "logo-col">
+                <img id = "home-logo" src = "assets/images/login_logo.png" width = "50px">
+                <p id = "home-header">Bark</p>
+            </div>
+            <div class = "col-md-1">
+                <button type="button" class="actn-btn btn btn-light btn-small">Sign-out</button>
+            </div>
+            <div class = "col-md-7">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            </div>
+            <div class = "col-md-1">
+                <button type="button" class="actn-btn btn btn-light btn-small">Search</button>
+            </div>
+            <div class = "col-md-1">
+                <button type="button" class="actn-btn btn btn-light btn-small">Post</button>
+            </div>
+        
+    <!--
+        <div lcass = "col-md-2">
+            <a class="navbar-brand" href="#">BARK!</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+    
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="logout-btn nav-link" href="#">Sign Out</a>
+                    </li>
+                </ul>
+                 <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+        <div class = "col-md-8">
             <form class="form-inline my-2 my-lg-0">
                 <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
             </form>
         </div>
-        <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary ml-2" data-toggle="modal" data-target="#exampleModal">
-            Post
-        </button>
+         Button trigger modal 
+        <div class = "col-md-2">
+            <button type="button" class="btn btn-primary ml-2" data-toggle="modal" data-target="#exampleModal">
+                Post
+            </button>
+        </div>
+
+    -->
+     
+    
     </nav>
 
     <div class="row no-gutters">
