@@ -12,13 +12,6 @@ $(document).ready(function () {
   function success(pos) {
     crd = pos.coords;
 
-    console.log(pos);
-
-    console.log('Your current position is:');
-    console.log(`Latitude : ${crd.latitude}`);
-    console.log(`Longitude: ${crd.longitude}`);
-    console.log(`More or less ${crd.accuracy} meters.`);
-
     createWeatherWidget();
   }
 
@@ -52,49 +45,49 @@ $(document).ready(function () {
 
         cityName = response.name;
 
-        getPosts();
+        getPosts("");
       })();
     });
   }
-  var postContainer = $(".post-container");
 
   $(document).on("click", ".post", function () {
     console.log("sup")
   });
 
-  function getPosts(categoryId) {
-    var categoryString = categoryId || "";
-    var cityId
+  function getPosts(categoryString) {
+    var cityId;
 
     $.get("/api/location/" + cityName, function (data) {
+      console.log(data);
       cityId = data.id;
+      console.log(cityId);
+
+      if (categoryString !== "") {
+        $.get("/api/post/" + cityId + "/category/" + categoryString, function (data) {
+          console.log("Posts", data);
+          posts = data;
+          if (!posts || !posts.length) {
+            displayEmpty();
+          }
+          else {
+            initializeRows(posts);
+          }
+        });
+      }
+
+      else {
+        $.get("/api/post/" + cityId, function (data) {
+          console.log("Posts", data);
+          posts = data;
+          if (!posts || !posts.length) {
+            displayEmpty();
+          }
+          else {
+            initializeRows(posts);
+          }
+        });
+      }
     });
-
-    if (categoryString) {
-      $.get("/api/posts/" + cityId + "/category/" + categoryId, function (data) {
-        console.log("Posts", data);
-        posts = data;
-        if (!posts || !posts.length) {
-          displayEmpty();
-        }
-        else {
-          initializeRows(posts);
-        }
-      });
-    }
-
-    else {
-      $.get("/api/posts/" + cityId, function (data) {
-        console.log("Posts", data);
-        posts = data;
-        if (!posts || !posts.length) {
-          displayEmpty();
-        }
-        else {
-          initializeRows(posts);
-        }
-      });
-    }
   }
 
   function initializeRows(posts) {
@@ -105,13 +98,12 @@ $(document).ready(function () {
       postsToAdd.push(createNewRow(posts[i]));
     }
 
-    $("#postContainer").append(postsToAdd);
+    $("#postContainer").prepend(postsToAdd);
   };
 
   function displayEmpty() {
     $("#postContainer").html("<h1>NOTHING HERE</h1>");
   }
-
 
   function createNewRow(post) {
     //CREATE NEW post card
@@ -152,6 +144,7 @@ $(document).ready(function () {
 
     newPostCard.append(newPostCardImg, newPostCardBody);
     newPostCard.data("post", post);
+
     return newPostCard;
   }
 });
