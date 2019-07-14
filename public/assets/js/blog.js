@@ -65,7 +65,7 @@ $(document).ready(function () {
     console.log(newPost);
 
 
-    $.get("/api/post/", newPost)
+    $.post("/api/post/", newPost)
       .then(function (data) {
         window.location.href = "/#"     })
   });
