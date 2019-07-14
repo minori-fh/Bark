@@ -1,4 +1,5 @@
-.widget-right {
+
+  .widget-right {
     width: 100% !important;
     box-shadow: none !important;
     border: 1px solid black;
@@ -195,5 +196,3 @@ h2{
 #exampleModalLabel{
     font-family: 'Pacifico', cursive;
 }
-
-  
