@@ -51,8 +51,27 @@ $(document).ready(function () {
   }
 
   $(document).on("click", ".post", function () {
-    console.log("sup")
+    var titleInput = $("#title");
+    var imageInput = $("#image");
+    var postCategorySelect = $("#category");
+    var postInput = $("#post");
+
+    var newPost = {
+      title: titleInput.val().trim(),
+      image: imageInput.val().trim(),
+      category: postCategorySelect.val().trim(),
+      post: postInput.val().trim(),
+    };
+    console.log(newPost);
+
+
+    $.get("/api/post/", newPost)
+      .then(function (data) {
+        window.location.href = "/#"     })
   });
+
+
+
 
   function getPosts(categoryString) {
     var cityId;
