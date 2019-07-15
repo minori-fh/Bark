@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,101 +8,115 @@
     <title>BARK</title>
 
     <link href="https://fonts.googleapis.com/css?family=Pacifico&display=swap" rel="stylesheet">
-    <script
-    src="https://code.jquery.com/jquery-3.4.1.min.js"
-    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-    crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="assets/css/style.css">
-    
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
 </head>
-<body id = "login-body">
 
-    <div id = "login-logo">
-        <img id = "logo" src = "assets/images/login_logo.png" width = "70px">
+<body id="login-body">
+
+    <div id="login-logo">
+        <img id="logo" src="assets/images/login_logo.png" width="70px">
     </div>
 
-    <form id="auth-form">
-        <h2>Welcome</h2>
+    <div class="row no-gutters justify-content-center">
+        <div class="col-10 col-md-8 col-lg-5">
+            <form id="auth-form">
+                <h2>Welcome</h2>
 
-        <label for="user-email" aria-label="email" >Email </label><br>
-        <input type="email" id="user-email" name="email" required aria-required="true"><br>
-        <label for="user-password" aria-label="password">Password (at least 6 letters) </label><br>
-        <input type="password" id="user-password" name="local_pw" required min-length=6 aria-required="true"><br>
-        <div id = "buttons">
-            <button class="auth-btn" id = "signup">Signup</button>
-            <button class="auth-btn" id = "login">Login</button>
+                <label for="user-email" aria-label="email">Email </label><br>
+                <input type="email" id="user-email" name="email" required aria-required="true"><br>
+                <label for="user-password" aria-label="password">Password (at least 6 letters) </label><br>
+                <input type="password" id="user-password" name="local_pw" required min-length=6
+                    aria-required="true"><br>
+                <div class="row no-gutters text-center">
+                    <div class="col-12 col-md-6">
+                        <button class="auth-btn mt-3 py-2 user-name" id="signup">Signup</button>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <button class="auth-btn mt-3 py-2" id="login">Login</button>
+                    </div>
+                </div>
+            </form>
+
+            <div class="msg-wrap hide">
+                <p id="message"></p>
+            </div>
         </div>
-    </form>
-
-    <div class="msg-wrap hide">
-        <p id="message"></p>
     </div>
 
-<script>
-    $('.auth-btn').click(function(e){
-        e.preventDefault();
-        $('#auth-form')[0].reportValidity();
 
-        var action = $(this).text().toLocaleLowerCase();
+    <script>
+        $('.auth-btn').click(function (e) {
+            e.preventDefault();
+            $('#auth-form')[0].reportValidity();
 
-        if($('#auth-form')[0].checkValidity()) {
-            $("#logo").addClass("rotate-vert-center")
-            var user = {
-                email: $('#user-email').val(),
-                local_pw: $('#user-password').val()
+            var action = $(this).text().toLocaleLowerCase();
+
+            if ($('#auth-form')[0].checkValidity()) {
+                $("#logo").addClass("rotate-vert-center")
+                var user = {
+                    email: $('#user-email').val(),
+                    local_pw: $('#user-password').val()
+                }
+
+                setTimeout(
+                    function () {
+                        switch (action) {
+                            case 'signup':
+                                signup(user)
+                                break;
+                            case 'login':
+                                login(user)
+                                break;
+                            default:
+                                return
+                        }
+
+                    }, 1000);
+            } else {
+                return
             }
+        });
 
-            setTimeout(
-            function() 
-            {
-                switch(action){
-                case 'signup':
-                    signup(user)
-                break;
-                case 'login':
-                    login(user)
-                break;
-                default:
-                    return
-            }
-                
-            }, 1000);
-        } else {
-            return
+        function signup(payload) {
+            $.post('/api/auth/signup', payload, function (response) {
+                console.log(response);
+                if (response.success) {
+                    location.reload();
+                }
+                else {
+                    displayMSG(response);
+                }
+            });
         }
-    });
 
-    function signup(payload){
-        $.post('/api/auth/signup', payload, function(response){
-            console.log(response);
-            if(response.success){
-                location.reload();
-            }
-            else{
-                displayMSG(response);
-            }
-        });
-    }
+        function login(payload) {
+            $.post('/api/auth/login', payload, function (response) {
+                console.log(response);
+                if (response.success) {
+                    location.reload();
+                }
+                else {
+                    displayMSG(response);
+                }
+            });
+        }
+        function displayMSG(response) {
 
-    function login(payload){
-        $.post('/api/auth/login', payload, function(response){
-            console.log(response);
-            if(response.success){
-                location.reload();
-            }
-            else{
-                displayMSG(response);
-            }
-        });
-    }
-    function displayMSG (response){
-        
-        $('#message').text(response.message)
-        $(".msg-wrap").slideDown("slow");
-    }
-</script>
-   
+            $('#message').text(response.message)
+            $(".msg-wrap").slideDown("slow");
+        }
+
+        $(".user-name").on("click",function(){
+            prompt("Please pick a username!")
+        })
+    </script>
+
 </body>
+
 </html>

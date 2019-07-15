@@ -2,6 +2,7 @@ $(document).ready(function () {
 
   var crd;
   var cityName;
+  var cityId;
 
   var options = {
     enableHighAccuracy: true,
@@ -11,13 +12,6 @@ $(document).ready(function () {
 
   function success(pos) {
     crd = pos.coords;
-
-    console.log(pos);
-
-    console.log('Your current position is:');
-    console.log(`Latitude : ${crd.latitude}`);
-    console.log(`Longitude: ${crd.longitude}`);
-    console.log(`More or less ${crd.accuracy} meters.`);
 
     createWeatherWidget();
   }
@@ -52,71 +46,75 @@ $(document).ready(function () {
 
         cityName = response.name;
 
-        getPosts();
+        getPosts("");
       })();
     });
   }
-  var postContainer = $(".post-container");
 
-  $(document).on("click", ".post", function () {
-    console.log("sup")
-  });
-
-  function getPosts(categoryId) {
-    var categoryString = categoryId || "";
-    var cityId
+  function getPosts(categoryString) {
 
     $.get("/api/location/" + cityName, function (data) {
+      console.log(data);
       cityId = data.id;
+      console.log(cityId);
+
+      if (categoryString !== "") {
+        $.get("/api/post/" + cityId + "/category/" + categoryString, function (data) {
+          console.log("Posts", data);
+          posts = data;
+          if (!posts || !posts.length) {
+            displayEmpty();
+          }
+          else {
+            initializeRows(posts);
+          }
+        });
+      }
+
+      else {
+        $.get("/api/post/" + cityId, function (data) {
+          console.log("Posts", data);
+          posts = data;
+          if (!posts || !posts.length) {
+            displayEmpty();
+          }
+          else {
+            initializeRows(posts);
+          }
+        });
+      }
     });
-
-    if (categoryString) {
-      $.get("/api/posts/" + cityId + "/category/" + categoryId, function (data) {
-        console.log("Posts", data);
-        posts = data;
-        if (!posts || !posts.length) {
-          displayEmpty();
-        }
-        else {
-          initializeRows(posts);
-        }
-      });
-    }
-
-    else {
-      $.get("/api/posts/" + cityId, function (data) {
-        console.log("Posts", data);
-        posts = data;
-        if (!posts || !posts.length) {
-          displayEmpty();
-        }
-        else {
-          initializeRows(posts);
-        }
-      });
-    }
   }
 
   function initializeRows(posts) {
-    $("#postContainer").empty();
+    $("#column-1").empty();
+    $("#column-2").empty();
 
-    var postsToAdd = [];
     for (var i = 0; i < posts.length; i++) {
-      postsToAdd.push(createNewRow(posts[i]));
+      if (i === 0) {
+        $("#column-1").prepend(createNewRow(posts[i]));
+      }
+      else if (i === 1) {
+        $("#column-2").prepend(createNewRow(posts[i]));
+      }
+      else if ((i + 1) % 2 === 1) {
+        $("#column-1").prepend(createNewRow(posts[i]));
+      }
+      else {
+        $("#column-2").prepend(createNewRow(posts[i]));
+      }
     }
-
-    $("#postContainer").append(postsToAdd);
   };
 
   function displayEmpty() {
-    $("#postContainer").html("<h1>NOTHING HERE</h1>");
+    $("#column-1").html("<h1>NOTHING HERE</h1>");
+    $("#column-2").html("<h1>NOTHING HERE</h1>");
   }
-
 
   function createNewRow(post) {
     //CREATE NEW post card
     var newPostCard = $("<div>");
-    newPostCard.addClass("card my-2");
+    newPostCard.addClass("card m-2");
     //CREATE NEW psot card img
     var newPostCardImg = $("<img>");
     newPostCardImg.addClass("card-img-top");
@@ -125,8 +123,11 @@ $(document).ready(function () {
     newPostCardBody.addClass("card-body");
     //CREATE NEW upvote button
     var upvoteBtn = $("<button>");
-    upvoteBtn.text("Upvote");
-    upvoteBtn.addClass("upvote btn btn-primary");
+    upvoteBtn.text("Like");
+    upvoteBtn.addClass("upvote btn-sm btn-primary");
+    //CREATE NEW like counter
+    var newPostLikes = $("<small>");
+    newPostLikes.attr('id', post.id);
     //CREATE NEW post title
     var newPostTitle = $("<h5>");
     newPostTitle.addClass("card-title");
@@ -140,18 +141,74 @@ $(document).ready(function () {
     var newPostCardText = $("<p>");
     newPostCardText.addClass("card-text");
 
+    var upvoteImg = $("<img>").attr('src', "assets/images/bone.jpg");
+    upvoteImg.addClass("bone");
+
 
     newPostTitle.text(post.title + " "); //grab title from post
     newPostCardText.text(post.body); //grab body from post
     // need to make fomatted date with moments
     newPostTime.text(post.createdAt); //grab created at from post
     newPostDate.append(newPostTime);
+    newPostLikes.text(post.likes);
+    upvoteBtn.attr('value', post.id);
+
+    newPostCardImg.attr('src', post.image);
 
 
-    newPostCardBody.append(newPostTitle, newPostCardText, newPostDate);
+    newPostCardBody.append(newPostTitle, newPostCardText, newPostDate, newPostLikes, upvoteBtn, upvoteImg);
 
     newPostCard.append(newPostCardImg, newPostCardBody);
     newPostCard.data("post", post);
+
     return newPostCard;
-  }
+  };
+
+  $(".post").on('click', function (event) {
+    event.preventDefault();
+
+    console.log("posting new post");
+
+    var post = {
+      title: $("#title").val().trim(),
+      body: $("#body").val().trim(),
+      image: $("#imageLink").val().trim(),
+      CategoryId: $("#categorySelect").val(),
+      LocationId: cityId,
+      UserId: 1
+    };
+
+    $.post("/api/post", post, function (data) {
+      alert("Created new Post!");
+      console.log(data);
+    });
+
+    $('#exampleModal').modal('hide');
+    getPosts($("#categorySelect").val());
+  });
+
+  $(document).on('click', ".upvote", function (event) {
+    event.preventDefault();
+    var likes = parseInt($("#" + $(this).val()).text());
+    likes += 1;
+
+    console.log(likes);
+
+    console.log("/api/post/" + $(this).val());
+
+    var target = $(this).val();
+    var newlikes = {
+      likes: likes
+    };
+
+    $.ajax("/api/post/" + $(this).val(), {
+      type: "PUT",
+      data: newlikes
+    }).then(
+      function (data) {
+        console.log(data[0]);
+        $("#" + target).text(likes);
+      }
+    );
+  })
 });

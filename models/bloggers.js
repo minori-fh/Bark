@@ -1,18 +1,18 @@
 var Sequelize = require("sequelize");
-var bcrypt    = require('bcrypt');
+var bcrypt = require('bcrypt');
 
-module.exports = function(sequelize, DataTypes){
+module.exports = function (sequelize, DataTypes) {
     var Blogger = sequelize.define("Blogger", {
         uuid: {
-          primaryKey: true,
-          type: DataTypes.UUID,
-          defaultValue: DataTypes.UUIDV4,
-          isUnique :true
+            primaryKey: true,
+            type: DataTypes.UUID,
+            defaultValue: DataTypes.UUIDV4,
+            isUnique: true
         },
         email: {
             type: DataTypes.STRING,
             allowNull: false,
-            isUnique :true,
+            isUnique: true,
             validate: {
                 isEmail: true,
                 min: 5
@@ -22,7 +22,7 @@ module.exports = function(sequelize, DataTypes){
             type: DataTypes.STRING,
             required: true,
             validate: {
-                min:6
+                min: 6
             }
         },
         createdAt: Sequelize.DATE,
@@ -32,22 +32,22 @@ module.exports = function(sequelize, DataTypes){
 
     // methods ======================
     // generating pw hash
-    Blogger.generateHash = function(password) {
-      return bcrypt.hashSync(password, bcrypt.genSaltSync(10), null);
+    Blogger.generateHash = function (password) {
+        return bcrypt.hashSync(password, bcrypt.genSaltSync(10), null);
     };
-    
+
     // validate pw
-    Blogger.prototype.validPassword = function(lpw, password) {
-      return bcrypt.compareSync(lpw, password);
+    Blogger.prototype.validPassword = function (lpw, password) {
+        return bcrypt.compareSync(lpw, password);
     };
 
     // accociations ======================
-    Blogger.associate = function(models) {
+    Blogger.associate = function (models) {
         Blogger.hasOne(models.Account, {
             foreignKey: "accountUUID",
             onDelete: "cascade"
         });
     };
-
+    
     return Blogger;
 }

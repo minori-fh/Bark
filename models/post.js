@@ -1,3 +1,5 @@
+var Sequelize = require("sequelize");
+
 module.exports = function (sequelize, DataTypes) {
   var Post = sequelize.define("Post", {
     title: {
@@ -20,7 +22,8 @@ module.exports = function (sequelize, DataTypes) {
     },
     likes: {
       type: DataTypes.INTEGER,
-      DEFAULT: 0
+      allowNull: false,
+      defaultValue: 0
     }
   });
 
