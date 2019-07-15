@@ -203,6 +203,9 @@
         $(".searchButton").on("click", function(){
            var searchTerms = $(".search").val()
            console.log(searchTerms);
+
+        }).then(function (){
+            $.get("/:locationId/category/:categoryId")
         })
 
     </script>
