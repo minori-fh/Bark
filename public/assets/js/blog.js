@@ -141,7 +141,7 @@ $(document).ready(function () {
     var newPostCardText = $("<p>");
     newPostCardText.addClass("card-text");
 
-    var upvoteImg = $("<img>").attr('src', "https://i.pinimg.com/736x/d7/f6/29/d7f629f9309d390cad5bb76906f44863.jpg");
+    var upvoteImg = $("<img>").attr('src', "assets/images/bone.jpg");
     upvoteImg.addClass("bone");
 
 
