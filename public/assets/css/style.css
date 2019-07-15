@@ -172,6 +172,11 @@ h2 {
     text-align: center; 
 }
 
+.upvote {
+    width: 20%;
+    float: left;
+}
+
 /* Modal CSS */
 .modal-label {
     color: black; 

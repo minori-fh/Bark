@@ -123,8 +123,11 @@ $(document).ready(function () {
     newPostCardBody.addClass("card-body");
     //CREATE NEW upvote button
     var upvoteBtn = $("<button>");
-    upvoteBtn.text("Upvote");
-    upvoteBtn.addClass("upvote btn btn-primary");
+    upvoteBtn.text("Like");
+    upvoteBtn.addClass("upvote btn-sm btn-primary");
+    //CREATE NEW like counter
+    var newPostLikes = $("<small>");
+    newPostLikes.attr('id', post.id);
     //CREATE NEW post title
     var newPostTitle = $("<h5>");
     newPostTitle.addClass("card-title");
@@ -144,11 +147,13 @@ $(document).ready(function () {
     // need to make fomatted date with moments
     newPostTime.text(post.createdAt); //grab created at from post
     newPostDate.append(newPostTime);
+    newPostLikes.text(post.likes);
+    upvoteBtn.attr('value', post.id);
 
     newPostCardImg.attr('src', post.image);
 
 
-    newPostCardBody.append(newPostTitle, newPostCardText, newPostDate);
+    newPostCardBody.append(newPostTitle, newPostCardText, newPostDate, newPostLikes, upvoteBtn);
 
     newPostCard.append(newPostCardImg, newPostCardBody);
     newPostCard.data("post", post);
@@ -174,5 +179,23 @@ $(document).ready(function () {
       alert("Created new Post!");
       console.log(data);
     });
+
+    $('#exampleModal').modal('hide');
+    getPosts($("#categorySelect").val());
   });
+
+  $(document).on('click', ".upvote", function (event) {
+    event.preventDefault();
+    var likes = $("#" + $(this).val()).text();
+    likes += 1;
+
+    $.ajax("/api/post/" + $(this).val(), {
+      type: "PUT",
+      data: likes
+    }).then(
+      function (data) {
+        console.log(data[0]);
+      }
+    );
+  })
 });
