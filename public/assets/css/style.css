@@ -172,6 +172,10 @@ h2 {
     text-align: center; 
 }
 
+.category-btn {
+    width: 100%;
+}
+
 .upvote {
     width: 20%;
     float: left;
