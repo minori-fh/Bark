@@ -51,15 +51,15 @@ $(document).ready(function () {
     });
   }
 
-  function getPosts(categoryString) {
+  function getPosts(categoryId) {
 
     $.get("/api/location/" + cityName, function (data) {
       console.log(data);
       cityId = data.id;
       console.log(cityId);
 
-      if (categoryString !== "") {
-        $.get("/api/post/" + cityId + "/category/" + categoryString, function (data) {
+      if (categoryId !== "") {
+        $.get("/api/post/" + cityId + "/category/" + categoryId, function (data) {
           console.log("Posts", data);
           posts = data;
           if (!posts || !posts.length) {
@@ -210,5 +210,25 @@ $(document).ready(function () {
         $("#" + target).text(likes);
       }
     );
-  })
+  });
+
+  $(".category-btn").on('click', function (event) {
+    event.preventDefault();
+
+    var dataId = $(this).data("id");
+    highlightCategory(dataId);
+
+    getPosts(dataId);
+  });
+
+  function highlightCategory(selectionId) {
+
+    for (var i = 1; i < 9; i++) {
+      if (i !== selectionId) {
+        $("#category-" + i).css("background-image", "none");
+      }
+    }
+
+    $("#category-" + selectionId).css("background-image", "url(assets/images/nav_bg.png)");
+  }
 });
