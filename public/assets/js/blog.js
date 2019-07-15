@@ -2,6 +2,7 @@ $(document).ready(function () {
 
   var crd;
   var cityName;
+  var cityId;
 
   var options = {
     enableHighAccuracy: true,
@@ -50,12 +51,7 @@ $(document).ready(function () {
     });
   }
 
-  $(document).on("click", ".post", function () {
-    console.log("sup")
-  });
-
   function getPosts(categoryString) {
-    var cityId;
 
     $.get("/api/location/" + cityName, function (data) {
       console.log(data);
@@ -91,24 +87,34 @@ $(document).ready(function () {
   }
 
   function initializeRows(posts) {
-    $("#postContainer").empty();
+    $("#column-1").empty();
+    $("#column-2").empty();
 
-    var postsToAdd = [];
     for (var i = 0; i < posts.length; i++) {
-      postsToAdd.push(createNewRow(posts[i]));
+      if (i === 0) {
+        $("#column-1").prepend(createNewRow(posts[i]));
+      }
+      else if (i === 1) {
+        $("#column-2").prepend(createNewRow(posts[i]));
+      }
+      else if ((i + 1) % 2 === 1) {
+        $("#column-1").prepend(createNewRow(posts[i]));
+      }
+      else {
+        $("#column-2").prepend(createNewRow(posts[i]));
+      }
     }
-
-    $("#postContainer").prepend(postsToAdd);
   };
 
   function displayEmpty() {
-    $("#postContainer").html("<h1>NOTHING HERE</h1>");
+    $("#column-1").html("<h1>NOTHING HERE</h1>");
+    $("#column-2").html("<h1>NOTHING HERE</h1>");
   }
 
   function createNewRow(post) {
     //CREATE NEW post card
     var newPostCard = $("<div>");
-    newPostCard.addClass("card my-2");
+    newPostCard.addClass("card m-2");
     //CREATE NEW psot card img
     var newPostCardImg = $("<img>");
     newPostCardImg.addClass("card-img-top");
@@ -139,6 +145,8 @@ $(document).ready(function () {
     newPostTime.text(post.createdAt); //grab created at from post
     newPostDate.append(newPostTime);
 
+    newPostCardImg.attr('src', post.image);
+
 
     newPostCardBody.append(newPostTitle, newPostCardText, newPostDate);
 
@@ -146,5 +154,25 @@ $(document).ready(function () {
     newPostCard.data("post", post);
 
     return newPostCard;
-  }
+  };
+
+  $(".post").on('click', function (event) {
+    event.preventDefault();
+
+    console.log("posting new post");
+
+    var post = {
+      title: $("#title").val().trim(),
+      body: $("#body").val().trim(),
+      image: $("#imageLink").val().trim(),
+      CategoryId: $("#categorySelect").val(),
+      LocationId: cityId,
+      UserId: 1
+    };
+
+    $.post("/api/post", post, function (data) {
+      alert("Created new Post!");
+      console.log(data);
+    });
+  });
 });
