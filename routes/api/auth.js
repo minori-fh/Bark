@@ -13,9 +13,6 @@ router.post('/login', function(req, res, next){
           console.log(err)
           return next(err); // will generate a 500 error
         }
-
-        // Generate a JSON response reflecting authentication status
-        // null or undefined
         if (!user) {
           console.log(user)
           console.log(info)
@@ -27,7 +24,6 @@ router.post('/login', function(req, res, next){
               console.log("loginerr", loginErr)
               return next(loginErr);
             }
-    
             res.cookie('user_email', user.email );
             res.cookie('authenticated', "true" );
             res.cookie('user_name', user.name );
