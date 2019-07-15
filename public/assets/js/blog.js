@@ -60,14 +60,16 @@ $(document).ready(function () {
       title: titleInput.val().trim(),
       image: imageInput.val().trim(),
       category: postCategorySelect.val().trim(),
-      post: postInput.val().trim(),
+      body: postInput.val().trim(),
     };
     console.log(newPost);
 
 
     $.post("/api/post/", newPost)
       .then(function (data) {
-        window.location.href = "/#"     })
+        
+       getPosts(data)
+       })
   });
 
 
