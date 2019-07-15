@@ -33,9 +33,12 @@
                 <label for="user-password" aria-label="password">Password (at least 6 letters) </label><br>
                 <input type="password" id="user-password" name="local_pw" required min-length=6
                     aria-required="true"><br>
+                <label for="user-name" aria-label="user-name">Username</label><br>
+                <input type="Name" id="user-name" name="user-name" required aria-required="true"
+                    placeholder="Create a username"><br>
                 <div class="row no-gutters text-center">
                     <div class="col-12 col-md-6">
-                        <button class="auth-btn mt-3 py-2 user-name" id="signup">Signup</button>
+                        <button class="auth-btn mt-3 py-2" id="signup">Signup</button>
                     </div>
                     <div class="col-12 col-md-6">
                         <button class="auth-btn mt-3 py-2" id="login">Login</button>
@@ -60,15 +63,17 @@
             if ($('#auth-form')[0].checkValidity()) {
                 $("#logo").addClass("rotate-vert-center")
                 var user = {
-                    email: $('#user-email').val(),
-                    local_pw: $('#user-password').val()
+                    email: $('#user-email').val().trim(),
+                    local_pw: $('#user-password').val().trim(),
+                    username: $('#user-name').val().trim(),
                 }
+
 
                 setTimeout(
                     function () {
                         switch (action) {
                             case 'signup':
-                                signup(user)
+                                signup(user);
                                 break;
                             case 'login':
                                 login(user)
@@ -85,6 +90,7 @@
 
         function signup(payload) {
             $.post('/api/auth/signup', payload, function (response) {
+                console.log(payload)
                 console.log(response);
                 if (response.success) {
                     location.reload();
@@ -97,6 +103,7 @@
 
         function login(payload) {
             $.post('/api/auth/login', payload, function (response) {
+                console.log(payload)
                 console.log(response);
                 if (response.success) {
                     location.reload();
@@ -112,9 +119,6 @@
             $(".msg-wrap").slideDown("slow");
         }
 
-        $(".user-name").on("click",function(){
-            prompt("Please pick a username!")
-        })
     </script>
 
 </body>

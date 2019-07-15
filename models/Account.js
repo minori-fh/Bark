@@ -28,12 +28,5 @@ module.exports = function(sequelize, DataTypes){
         updatedAt: Sequelize.DATE
     });
 
-    Account.associate = function(models){
-        Account.belongsTo(models.User, {
-            foreignKey: "userUUID",
-            onDelete: "cascade"
-        });
-    };
-
     return Account;
 }

@@ -45,11 +45,15 @@ $(document).ready(function () {
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
 
         cityName = response.name;
+        console.log(cityName)
+        // remove loader
+        $("#loader").slideUp('slow');
 
-        getPosts("");
+        getPosts();
       })();
     });
   }
+
 
   function getPosts(categoryId) {
 
@@ -126,8 +130,8 @@ $(document).ready(function () {
   };
 
   function displayEmpty() {
-    $("#column-1").html("<h1>NOTHING HERE</h1>");
-    $("#column-2").html("<h1>NOTHING HERE</h1>");
+    $("#column-1").html("");
+    $("#column-2").html("");
   }
 
   function createNewRow(post) {
@@ -186,15 +190,12 @@ $(document).ready(function () {
   $(".post").on('click', function (event) {
     event.preventDefault();
 
-    console.log("posting new post");
-
     var post = {
       title: $("#title").val().trim(),
       body: $("#body").val().trim(),
-      image: $("#imageLink").val().trim(),
+      image: $("#imageLink").val().trim() || null,
       CategoryId: $("#categorySelect").val(),
-      LocationId: cityId,
-      UserId: 1
+      city: cityName
     };
 
     $.post("/api/post", post, function (data) {

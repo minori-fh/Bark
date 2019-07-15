@@ -8,17 +8,18 @@ module.exports = {
       db.Account
         .findOne({ where: { userUUID: req.session.passport.user }, include: [db.Blogger] })
         .then(dbaccount => {
-          if(dbaccount === null) {
-            res.json({message:"please add an account"})
+          if (dbaccount === null) {
+            res.json({ message: "please add an account" })
           } else {
-            res.json({message:null, account:dbaccount});
+            res.json({ message: null, account: dbaccount });
           }
 
         })
         .catch(function (err) {
           console.log(err)
-           res.json(err) });
-        
+          res.json(err)
+        });
+
 
     }
     else {
@@ -58,5 +59,15 @@ module.exports = {
         .catch(err => res.status(422).json(err));
     }
     res.status(401).json(err);
-  }
+  },
+  count: function (req, res) {
+    db.Account
+      .findAll({})
+      .then(dbaccount => {
+        res.json(dbaccount);
+      })
+      .catch(err => res.status(422).json(err));
+
+    res.status(401).json(err);
+  },
 };
