@@ -1,4 +1,5 @@
 $(document).ready(function () {
+  moment().format();
 
   var crd;
   var cityName;
@@ -163,11 +164,18 @@ $(document).ready(function () {
     var upvoteImg = $("<img>").attr('src', "assets/images/bone.jpg");
     upvoteImg.addClass("bone");
 
-
     newPostTitle.text(post.title + " "); //grab title from post
     newPostCardText.text(post.body); //grab body from post
     // need to make fomatted date with moments
-    newPostTime.text(post.createdAt); //grab created at from post
+  
+    formattedDate = post.createdAt
+    formattedDate = moment(formattedDate).format("MMMM Do YYYY, h:mm:ss a")
+
+    newPostTime.text(formattedDate); //grab created at from post
+    console.log(post.createdAt)
+    console.log(formattedDate)
+
+
     newPostDate.append(newPostTime);
     newPostLikes.text(post.likes);
     upvoteBtn.attr('value', post.id);
