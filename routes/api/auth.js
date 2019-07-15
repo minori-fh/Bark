@@ -30,6 +30,7 @@ router.post('/login', function(req, res, next){
     
             res.cookie('user_email', user.email );
             res.cookie('authenticated', "true" );
+            res.cookie('user_name', user.name );
     
             return res.json({ success: true });
         });
@@ -63,6 +64,7 @@ router.post('/signup', function(req, res, next){
             }
         
             res.cookie('user_email', user.email );
+            res.cookie('user_name', user.name );
             res.cookie('authenticated', "true" );
     
            return res.json({ success: true });

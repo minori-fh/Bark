@@ -62,7 +62,8 @@ module.exports = function(passport) {
                 // create the user
                     db.Blogger.create({
                         email: req.body.email,
-                        local_pw: db.Blogger.generateHash(local_pw)
+                        local_pw: db.Blogger.generateHash(local_pw),
+                        name: req.body.username
                     })
                         .then(function(dbUser){
                             // send post back to render
