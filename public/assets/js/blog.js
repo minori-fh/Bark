@@ -54,22 +54,34 @@ $(document).ready(function () {
     });
   }
 
-  function getPosts() {
 
-    $.get("/api/post/" + cityName, function (data) {
-      /*
-      got to post table get all post by city
-      return all post by city
-      
-      */
-     console.log(data);
-      if(data !== null) {
-       
-        // cityId = data.id;
-        // console.log(cityId);
-  
-        if (categoryString !== "") {
-          $.get("/api/post/" + cityName + "/category/" + categoryString, function (data) {
+  function getPosts(categoryId) {
+
+    $.get("/api/location", function (data) {
+      var exists = false;
+
+      for (var i = 0; i < data.length; i++) {
+        if (data[i].area === cityName) {
+          exists = true;
+        }
+      }
+
+      if (exists === false) {
+        var newCity = {
+          area: cityName
+        }
+        $.post("/api/location", newCity, function (data) {
+          console.log(data);
+        });
+      }
+
+      $.get("/api/location/" + cityName, function (data) {
+        console.log(data);
+        cityId = data.id;
+        console.log(cityId);
+
+        if (categoryId !== "") {
+          $.get("/api/post/" + cityId + "/category/" + categoryId, function (data) {
             console.log("Posts", data);
             posts = data;
             if (!posts || !posts.length) {
@@ -80,23 +92,21 @@ $(document).ready(function () {
             }
           });
         }
-  
+
         else {
-          $.get("/api/post/" + cityName, function (data) {
+          $.get("/api/post/" + cityId, function (data) {
             console.log("Posts", data);
             posts = data;
             if (!posts || !posts.length) {
-              // do nothing
+              displayEmpty();
             }
             else {
-              displayEmpty() 
               initializeRows(posts);
             }
           });
         }
-      }
       });
-      
+    });
   }
 
   function initializeRows(posts) {
@@ -136,8 +146,11 @@ $(document).ready(function () {
     newPostCardBody.addClass("card-body");
     //CREATE NEW upvote button
     var upvoteBtn = $("<button>");
-    upvoteBtn.text("Upvote");
-    upvoteBtn.addClass("upvote btn btn-primary");
+    upvoteBtn.text("Like");
+    upvoteBtn.addClass("upvote btn-sm btn-primary");
+    //CREATE NEW like counter
+    var newPostLikes = $("<small>");
+    newPostLikes.attr('id', post.id);
     //CREATE NEW post title
     var newPostTitle = $("<h5>");
     newPostTitle.addClass("card-title");
@@ -151,17 +164,22 @@ $(document).ready(function () {
     var newPostCardText = $("<p>");
     newPostCardText.addClass("card-text");
 
+    var upvoteImg = $("<img>").attr('src', "assets/images/bone.jpg");
+    upvoteImg.addClass("bone");
+
 
     newPostTitle.text(post.title + " "); //grab title from post
     newPostCardText.text(post.body); //grab body from post
     // need to make fomatted date with moments
     newPostTime.text(post.createdAt); //grab created at from post
     newPostDate.append(newPostTime);
+    newPostLikes.text(post.likes);
+    upvoteBtn.attr('value', post.id);
 
     newPostCardImg.attr('src', post.image);
 
 
-    newPostCardBody.append(newPostTitle, newPostCardText, newPostDate);
+    newPostCardBody.append(newPostTitle, newPostCardText, newPostDate, newPostLikes, upvoteBtn, upvoteImg);
 
     newPostCard.append(newPostCardImg, newPostCardBody);
     newPostCard.data("post", post);
@@ -184,6 +202,53 @@ $(document).ready(function () {
       alert("Created new Post!");
       console.log(data);
     });
+
+    $('#exampleModal').modal('hide');
+    getPosts($("#categorySelect").val());
   });
 
+  $(document).on('click', ".upvote", function (event) {
+    event.preventDefault();
+    var likes = parseInt($("#" + $(this).val()).text());
+    likes += 1;
+
+    console.log(likes);
+
+    console.log("/api/post/" + $(this).val());
+
+    var target = $(this).val();
+    var newlikes = {
+      likes: likes
+    };
+
+    $.ajax("/api/post/" + $(this).val(), {
+      type: "PUT",
+      data: newlikes
+    }).then(
+      function (data) {
+        console.log(data[0]);
+        $("#" + target).text(likes);
+      }
+    );
+  });
+
+  $(".category-btn").on('click', function (event) {
+    event.preventDefault();
+
+    var dataId = $(this).data("id");
+    highlightCategory(dataId);
+
+    getPosts(dataId);
+  });
+
+  function highlightCategory(selectionId) {
+
+    for (var i = 1; i < 9; i++) {
+      if (i !== selectionId) {
+        $("#category-" + i).css("background-image", "none");
+      }
+    }
+
+    $("#category-" + selectionId).css("background-image", "url(assets/images/nav_bg.png)");
+  }
 });
