@@ -35,7 +35,7 @@
                     aria-required="true"><br>
                 <div class="row no-gutters text-center">
                     <div class="col-12 col-md-6">
-                        <button class="auth-btn mt-3 py-2" id="signup">Signup</button>
+                        <button class="auth-btn mt-3 py-2 user-name" id="signup">Signup</button>
                     </div>
                     <div class="col-12 col-md-6">
                         <button class="auth-btn mt-3 py-2" id="login">Login</button>
@@ -48,6 +48,7 @@
             </div>
         </div>
     </div>
+
 
     <script>
         $('.auth-btn').click(function (e) {
@@ -110,6 +111,10 @@
             $('#message').text(response.message)
             $(".msg-wrap").slideDown("slow");
         }
+
+        $(".user-name").on("click",function(){
+            prompt("Please pick a username!")
+        })
     </script>
 
 </body>
