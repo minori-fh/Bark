@@ -33,7 +33,7 @@
             <input class="form-control px-0 search" type="search" placeholder="Search" aria-label="Search">
         </div>
         <div class="col-4 col-sm-4 col-lg-2 col-xl-1">
-            <button type="button" class="actn-btn btn btn-light btn-small">Search</button>
+            <button type="button" class="actn-btn btn btn-light btn-small searchButton">Search</button>
         </div>
         <div class="col-4 col-sm-4 col-lg-2 col-xl-1">
             <button type="button" class="actn-btn btn btn-light btn-small" data-toggle="modal"
@@ -200,8 +200,9 @@
             })
         })
 
-        $(".search").on("click", function(){
-            $("")
+        $(".searchButton").on("click", function(){
+           var searchTerms = $(".search").val()
+           console.log(searchTerms);
         })
 
     </script>
