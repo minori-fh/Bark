@@ -53,56 +53,31 @@ $(document).ready(function () {
 
   function getPosts(categoryId) {
 
-    $.get("/api/location", function (data) {
-      var exists = false;
-
-      for (var i = 0; i < data.length; i++) {
-        if (data[i].area === cityName) {
-          exists = true;
+    if (categoryId !== "") {
+      $.get("/api/post/" + cityName + "/category/" + categoryId, function (data) {
+        console.log("Posts", data);
+        posts = data;
+        if (!posts || !posts.length) {
+          displayEmpty();
         }
-      }
-
-      if (exists === false) {
-        var newCity = {
-          area: cityName
-        }
-        $.post("/api/location", newCity, function (data) {
-          console.log(data);
-        });
-      }
-
-      $.get("/api/location/" + cityName, function (data) {
-        console.log(data);
-        cityId = data.id;
-        console.log(cityId);
-
-        if (categoryId !== "") {
-          $.get("/api/post/" + cityId + "/category/" + categoryId, function (data) {
-            console.log("Posts", data);
-            posts = data;
-            if (!posts || !posts.length) {
-              displayEmpty();
-            }
-            else {
-              initializeRows(posts);
-            }
-          });
-        }
-
         else {
-          $.get("/api/post/" + cityId, function (data) {
-            console.log("Posts", data);
-            posts = data;
-            if (!posts || !posts.length) {
-              displayEmpty();
-            }
-            else {
-              initializeRows(posts);
-            }
-          });
+          initializeRows(posts);
         }
       });
-    });
+    }
+
+    else {
+      $.get("/api/post/" + cityName, function (data) {
+        console.log("Posts", data);
+        posts = data;
+        if (!posts || !posts.length) {
+          displayEmpty();
+        }
+        else {
+          initializeRows(posts);
+        }
+      });
+    }
   }
 
   function initializeRows(posts) {
@@ -192,9 +167,9 @@ $(document).ready(function () {
       title: $("#title").val().trim(),
       body: $("#body").val().trim(),
       image: $("#imageLink").val().trim(),
+      city: cityName,
       CategoryId: $("#categorySelect").val(),
-      LocationId: cityId,
-      UserId: 1
+      // BloggerUuid: 1
     };
 
     $.post("/api/post", post, function (data) {

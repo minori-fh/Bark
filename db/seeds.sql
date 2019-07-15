@@ -9,6 +9,3 @@ VALUES ("Weather"),
     ("TV"),
     ("Events"),
     ("Memes");
-
-INSERT INTO users (name)
-VALUES ("Jake Dudum");

@@ -4,7 +4,7 @@ module.exports = {
     findAllLocation: function (req, res) {
         db.Post.findAll({
             where: {
-                LocationId: req.params.locationId
+                city: req.params.city
             }
         }).then(function (dbPost) {
             res.json(dbPost);
@@ -13,7 +13,7 @@ module.exports = {
     findAllCategory: function (req, res) {
         db.Post.findAll({
             where: {
-                LocationId: req.params.locationId,
+                city: req.params.city,
                 CategoryId: req.params.categoryId
             }
         }).then(function (dbPost) {
