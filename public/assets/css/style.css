@@ -172,6 +172,20 @@ h2 {
     text-align: center; 
 }
 
+.upvote {
+    width: 20%;
+    float: left;
+    margin-right: 5px;
+}
+
+.bone {
+    height: 50px;
+    width: 70px;
+    float: left;
+    margin-right: 5px;
+    margin-top: -11px;
+}
+
 /* Modal CSS */
 .modal-label {
     color: black; 

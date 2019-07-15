@@ -1,9 +1,11 @@
 USE bark_db;
 INSERT INTO locations (area)
-VALUES ("San Bruno");
+VALUES ("Berkeley"),
+    ("San Francisco");
 
 INSERT INTO categories (name)
-VALUES ("Testing");
+VALUES ("Testing"),
+    ("Trying Something Else");
 
 INSERT INTO users (name)
 VALUES ("Jake Dudum");
