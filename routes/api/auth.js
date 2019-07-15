@@ -50,7 +50,7 @@ router.post('/signup', function(req, res, next){
           return res.send({ success : false, message : info });
         }
     
-        else{
+        else {
           req.login(user, function(loginErr)  {
             if (loginErr) {
               console.log("loginerr", loginErr)

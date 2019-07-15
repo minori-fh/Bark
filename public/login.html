@@ -72,7 +72,23 @@
                     function () {
                         switch (action) {
                             case 'signup':
-                                signup(user)
+                                signup(user);
+
+                                var id;
+                                $.get("/api/account").then(function (data) {
+                                    id = data.length;
+                                });
+
+                                var newUserName = {
+                                    name: $("#user-name").val(),
+                                    BloggerId: id
+                                }
+
+                                function userName(newUserName) {
+                                    $.post('/api/username', newUserName, function (response) {
+                                        console.log(response);
+                                    });
+                                }
                                 break;
                             case 'login':
                                 login(user)
@@ -85,16 +101,6 @@
             } else {
                 return
             }
-
-            var userName = {
-                name: $("#user-name").val()
-            }
-            function userName(userName) {
-                $.post('/api/user/',userName,function (response){
-                    console.log(response);
-                })
-            }
-
         });
 
         function signup(payload) {
