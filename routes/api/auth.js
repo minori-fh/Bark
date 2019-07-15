@@ -7,6 +7,8 @@ var passport = require('passport');
 // =====================================
 router.post('/login', function(req, res, next){ 
     passport.authenticate("local-login", function(err, user, info) {
+      console.log(user)
+
         if (err) {
           console.log(err)
           return next(err); // will generate a 500 error
@@ -15,6 +17,7 @@ router.post('/login', function(req, res, next){
         // Generate a JSON response reflecting authentication status
         // null or undefined
         if (!user) {
+          console.log(user)
           console.log(info)
           return res.json({ success: false, message: info });
         }
@@ -40,12 +43,14 @@ router.post('/login', function(req, res, next){
 router.post('/signup', function(req, res, next){ 
     
     passport.authenticate("local-signup", function(err, user, info) {
+      console.log(user)
         if (err) {
           console.log(err)
           return next(err); // will generate a 500 error
         }
         // Generate a JSON response reflecting authentication status
         if (! user) {
+          console.log(user)
           console.log(info)
           return res.send({ success : false, message : info });
         }

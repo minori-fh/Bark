@@ -75,20 +75,22 @@
                                 signup(user);
 
                                 var id;
-                                $.get("/api/account").then(function (data) {
+                                $.get("/api/account/count").then(function (data) {
                                     id = data.length;
-                                });
+                                    console.log(data);
+                                    console.log(id);
 
-                                var newUserName = {
-                                    name: $("#user-name").val(),
-                                    BloggerId: id
-                                }
+                                    var newUserName = {
+                                        name: $("#user-name").val(),
+                                        BloggerId: id
+                                    }
 
-                                function userName(newUserName) {
+                                    console.log(newUserName);
+
                                     $.post('/api/username', newUserName, function (response) {
                                         console.log(response);
                                     });
-                                }
+                                });
                                 break;
                             case 'login':
                                 login(user)
@@ -105,6 +107,7 @@
 
         function signup(payload) {
             $.post('/api/auth/signup', payload, function (response) {
+                console.log(payload)
                 console.log(response);
                 if (response.success) {
                     location.reload();
@@ -117,6 +120,7 @@
 
         function login(payload) {
             $.post('/api/auth/login', payload, function (response) {
+                console.log(payload)
                 console.log(response);
                 if (response.success) {
                     location.reload();
