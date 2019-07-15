@@ -46,10 +46,7 @@ module.exports = {
     update: function (req, res) {
         db.Post.update(req.body, {
             where: {
-                id: req.params.id
-            },
-            set: {
-                likes: req.body.likes
+                id: req.params.postId
             }
         }).then(function (dbPost) {
             res.json(dbPost);

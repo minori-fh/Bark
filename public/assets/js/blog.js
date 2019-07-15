@@ -141,6 +141,9 @@ $(document).ready(function () {
     var newPostCardText = $("<p>");
     newPostCardText.addClass("card-text");
 
+    var upvoteImg = $("<img>").attr('src', "https://i.pinimg.com/736x/d7/f6/29/d7f629f9309d390cad5bb76906f44863.jpg");
+    upvoteImg.addClass("bone");
+
 
     newPostTitle.text(post.title + " "); //grab title from post
     newPostCardText.text(post.body); //grab body from post
@@ -153,7 +156,7 @@ $(document).ready(function () {
     newPostCardImg.attr('src', post.image);
 
 
-    newPostCardBody.append(newPostTitle, newPostCardText, newPostDate, newPostLikes, upvoteBtn);
+    newPostCardBody.append(newPostTitle, newPostCardText, newPostDate, newPostLikes, upvoteBtn, upvoteImg);
 
     newPostCard.append(newPostCardImg, newPostCardBody);
     newPostCard.data("post", post);
@@ -186,15 +189,25 @@ $(document).ready(function () {
 
   $(document).on('click', ".upvote", function (event) {
     event.preventDefault();
-    var likes = $("#" + $(this).val()).text();
+    var likes = parseInt($("#" + $(this).val()).text());
     likes += 1;
+
+    console.log(likes);
+
+    console.log("/api/post/" + $(this).val());
+
+    var target = $(this).val();
+    var newlikes = {
+      likes: likes
+    };
 
     $.ajax("/api/post/" + $(this).val(), {
       type: "PUT",
-      data: likes
+      data: newlikes
     }).then(
       function (data) {
         console.log(data[0]);
+        $("#" + target).text(likes);
       }
     );
   })
