@@ -8,6 +8,7 @@ module.exports = {
             },
             include: [db.Blogger]
         }).then(function (dbPost) {
+            console.log("WTF");
             res.json(dbPost);
         });
     },
@@ -43,11 +44,11 @@ module.exports = {
             CategoryId: parseInt(req.body.CategoryId),
             BloggerUuid: bloggerID
         }, {
-            include: [db.Blogger]
-        })
-        .then(function(newPost){
-            console.log(newPost)
-        })
+                include: [db.Blogger]
+            })
+            .then(function (newPost) {
+                console.log(newPost)
+            })
     },
     remove: function (req, res) {
         db.Post.destroy({
@@ -62,6 +63,17 @@ module.exports = {
         db.Post.update(req.body, {
             where: {
                 id: req.params.postId
+            },
+            include: [db.Blogger]
+        }).then(function (dbPost) {
+            res.json(dbPost);
+        });
+    },
+    findAllPosts: function (req, res) {
+        var bloggerID = req.session.passport.user;
+        db.Post.findAll({
+            where: {
+                BloggerUuid: bloggerID
             },
             include: [db.Blogger]
         }).then(function (dbPost) {

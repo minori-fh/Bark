@@ -14,10 +14,10 @@ router.get("/", function(req, res){
 
 });
 
-router.get('/index', function(req, res){
+router.get('/profile', function(req, res){
     var auth = req.isAuthenticated();
     if(auth) {
-        res.sendFile(path.join(__dirname, "/../../public/index.html"));
+        res.sendFile(path.join(__dirname, "/../../public/profile.html"));
     } else {
         res.redirect("/");
     }

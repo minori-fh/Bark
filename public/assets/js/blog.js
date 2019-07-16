@@ -3,7 +3,6 @@ $(document).ready(function () {
 
   var crd;
   var cityName;
-  var cityId;
 
   var options = {
     enableHighAccuracy: true,
@@ -149,7 +148,7 @@ $(document).ready(function () {
     newPostTitle.text(post.title + " "); //grab title from post
     newPostCardText.text(post.body); //grab body from post
     // need to make fomatted date with moments
-  
+
     formattedDate = post.createdAt
     formattedDate = moment(formattedDate).format("MMMM Do YYYY, h:mm:ss a")
 
@@ -199,10 +198,6 @@ $(document).ready(function () {
     var likes = parseInt($("#" + $(this).val()).text());
     likes += 1;
 
-    console.log(likes);
-
-    console.log("/api/post/" + $(this).val());
-
     var target = $(this).val();
     var newlikes = {
       likes: likes
@@ -213,7 +208,6 @@ $(document).ready(function () {
       data: newlikes
     }).then(
       function (data) {
-        console.log(data[0]);
         $("#" + target).text(likes);
       }
     );
@@ -238,4 +232,14 @@ $(document).ready(function () {
 
     $("#category-" + selectionId).css("background-image", "url(assets/images/nav_bg.png)");
   }
+
+  $(".logout-btn").click(function () {
+    $.get('/api/auth/logout', function (response) {
+      if (response) {
+        location.reload();
+      } else {
+        alert("Please try again");
+      }
+    });
+  });
 });
