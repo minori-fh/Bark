@@ -4,6 +4,9 @@ var post = require("../../controllers/post-controller");
 router.route("/")
     .post(post.create);
 
+router.route("/findAll")
+    .get(post.findAllPosts);
+
 router.route("/:city")
     .get(post.findAllLocation);
 

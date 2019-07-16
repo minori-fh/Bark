@@ -203,6 +203,25 @@ h2 {
     float: right;
 }
 
+.profile_pic {
+    border-top-left-radius: 50% 50%;
+    border-top-right-radius: 50% 50%;
+    border-bottom-right-radius: 50% 50%;
+    border-bottom-left-radius: 50% 50%;
+    height: 100px;
+    width: 100px;
+    border: 5px solid violet;
+    margin-left: 30%;
+}
+    
+#history {
+    border: 5px solid violet !important;
+}
+
+.navbar-toggler-icon {
+    background-image: url("../images/login_logo.png") !important;
+}
+
 /* Modal CSS */
 .modal-label {
     color: black; 
