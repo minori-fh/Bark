@@ -16,13 +16,17 @@ module.exports = function (sequelize, DataTypes) {
         len: [1, 240]
       }
     },
+    city: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
     image: {
       type: DataTypes.STRING,
       allowNull: true
     },
     likes: {
       type: DataTypes.INTEGER,
-      DEFAULT: 0
+      defaultValue: 0
     },
     city:{
       type: DataTypes.STRING,

@@ -8,7 +8,4 @@ router.route("/")
   .put(account.update)
   .delete(account.delete);
 
-router.route("/count")
-  .get(account.count);
-
 module.exports = router;

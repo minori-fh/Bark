@@ -4,7 +4,7 @@ var post = require("../../controllers/post-controller");
 router.route("/")
     .post(post.create);
 
-router.route("/:locationId")
+router.route("/:city")
     .get(post.findAllLocation);
 
 router.route("/:postId")
@@ -12,10 +12,7 @@ router.route("/:postId")
     .put(post.update)
     .delete(post.remove);
 
-router.route("/:locationId/category/:categoryId")
+router.route("/:city/category/:categoryId")
     .get(post.findAllCategory);
-
-router.route("/:city")
-    .get(post.getOne);
 
 module.exports = router;

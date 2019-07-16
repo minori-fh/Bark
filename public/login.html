@@ -54,8 +54,8 @@
 
 
     <script>
-        $('.auth-btn').click(function (e) {
-            e.preventDefault();
+        $('.auth-btn').click(function (event) {
+            event.preventDefault();
             $('#auth-form')[0].reportValidity();
 
             var action = $(this).text().toLocaleLowerCase();
@@ -67,7 +67,6 @@
                     local_pw: $('#user-password').val().trim(),
                     username: $('#user-name').val().trim(),
                 }
-
 
                 setTimeout(
                     function () {

@@ -59,15 +59,5 @@ module.exports = {
         .catch(err => res.status(422).json(err));
     }
     res.status(401).json(err);
-  },
-  count: function (req, res) {
-    db.Account
-      .findAll({})
-      .then(dbaccount => {
-        res.json(dbaccount);
-      })
-      .catch(err => res.status(422).json(err));
-
-    res.status(401).json(err);
-  },
+  }
 };
