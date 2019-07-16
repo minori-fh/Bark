@@ -8,17 +8,18 @@ module.exports = {
       db.Account
         .findOne({ where: { userUUID: req.session.passport.user }, include: [db.Blogger] })
         .then(dbaccount => {
-          if(dbaccount === null) {
-            res.json({message:"please add an account"})
+          if (dbaccount === null) {
+            res.json({ message: "please add an account" })
           } else {
-            res.json({message:null, account:dbaccount});
+            res.json({ message: null, account: dbaccount });
           }
 
         })
         .catch(function (err) {
           console.log(err)
-           res.json(err) });
-        
+          res.json(err)
+        });
+
 
     }
     else {

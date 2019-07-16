@@ -1,4 +1,5 @@
 $(document).ready(function () {
+  moment().format();
 
   var crd;
   var cityName;
@@ -45,15 +46,19 @@ $(document).ready(function () {
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
 
         cityName = response.name;
+        console.log(cityName)
+        // remove loader
+        $("#loader").slideUp('slow');
 
-        getPosts("");
+        getPosts();
       })();
     });
   }
 
+
   function getPosts(categoryId) {
 
-    if (categoryId !== "") {
+    if (categoryId !== undefined) {
       $.get("/api/post/" + cityName + "/category/" + categoryId, function (data) {
         console.log("Posts", data);
         posts = data;
@@ -101,8 +106,8 @@ $(document).ready(function () {
   };
 
   function displayEmpty() {
-    $("#column-1").html("<h1>NOTHING HERE</h1>");
-    $("#column-2").html("<h1>NOTHING HERE</h1>");
+    $("#column-1").html("<h2>Nothing Here<h2>");
+    $("#column-2").html("<h2>Nothing Here<h2>");
   }
 
   function createNewRow(post) {
@@ -134,15 +139,25 @@ $(document).ready(function () {
     //CREATE NEW card text
     var newPostCardText = $("<p>");
     newPostCardText.addClass("card-text");
+    //CREATE NEW username
+    var userName = $("<p>").text(post.Blogger.name);
+    userName.addClass("username");
 
     var upvoteImg = $("<img>").attr('src', "assets/images/bone.jpg");
     upvoteImg.addClass("bone");
 
-
     newPostTitle.text(post.title + " "); //grab title from post
     newPostCardText.text(post.body); //grab body from post
     // need to make fomatted date with moments
-    newPostTime.text(post.createdAt); //grab created at from post
+  
+    formattedDate = post.createdAt
+    formattedDate = moment(formattedDate).format("MMMM Do YYYY, h:mm:ss a")
+
+    newPostTime.text(formattedDate); //grab created at from post
+    console.log(post.createdAt)
+    console.log(formattedDate)
+
+
     newPostDate.append(newPostTime);
     newPostLikes.text(post.likes);
     upvoteBtn.attr('value', post.id);
@@ -150,7 +165,7 @@ $(document).ready(function () {
     newPostCardImg.attr('src', post.image);
 
 
-    newPostCardBody.append(newPostTitle, newPostCardText, newPostDate, newPostLikes, upvoteBtn, upvoteImg);
+    newPostCardBody.append(newPostTitle, newPostCardText, newPostDate, newPostLikes, upvoteBtn, upvoteImg, userName);
 
     newPostCard.append(newPostCardImg, newPostCardBody);
     newPostCard.data("post", post);
@@ -161,15 +176,12 @@ $(document).ready(function () {
   $(".post").on('click', function (event) {
     event.preventDefault();
 
-    console.log("posting new post");
-
     var post = {
       title: $("#title").val().trim(),
       body: $("#body").val().trim(),
-      image: $("#imageLink").val().trim(),
-      city: cityName,
+      image: $("#imageLink").val().trim() || null,
       CategoryId: $("#categorySelect").val(),
-      // BloggerUuid: 1
+      city: cityName
     };
 
     $.post("/api/post", post, function (data) {
@@ -178,6 +190,7 @@ $(document).ready(function () {
     });
 
     $('#exampleModal').modal('hide');
+    highlightCategory($("#categorySelect").val());
     getPosts($("#categorySelect").val());
   });
 

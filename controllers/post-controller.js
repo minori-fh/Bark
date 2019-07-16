@@ -5,7 +5,8 @@ module.exports = {
         db.Post.findAll({
             where: {
                 city: req.params.city
-            }
+            },
+            include: [db.Blogger]
         }).then(function (dbPost) {
             res.json(dbPost);
         });
@@ -15,7 +16,8 @@ module.exports = {
             where: {
                 city: req.params.city,
                 CategoryId: req.params.categoryId
-            }
+            },
+            include: [db.Blogger]
         }).then(function (dbPost) {
             res.json(dbPost);
         });
@@ -24,15 +26,28 @@ module.exports = {
         db.Post.findOne({
             where: {
                 id: req.params.id
-            }
+            },
+            include: [db.Blogger]
         }).then(function (dbPost) {
             res.json(dbPost);
         });
     },
     create: function (req, res) {
-        db.Post.create(req.body).then(function (dbPost) {
-            res.json(dbPost);
-        });
+        var bloggerID = req.session.passport.user;
+        console.log(req.body)
+        db.Post.create({
+            title: req.body.title,
+            body: req.body.body,
+            image: req.body.image,
+            city: req.body.city,
+            CategoryId: parseInt(req.body.CategoryId),
+            BloggerUuid: bloggerID
+        }, {
+            include: [db.Blogger]
+        })
+        .then(function(newPost){
+            console.log(newPost)
+        })
     },
     remove: function (req, res) {
         db.Post.destroy({
@@ -47,9 +62,11 @@ module.exports = {
         db.Post.update(req.body, {
             where: {
                 id: req.params.postId
-            }
+            },
+            include: [db.Blogger]
         }).then(function (dbPost) {
             res.json(dbPost);
         });
     }
 };
+

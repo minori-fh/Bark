@@ -7,14 +7,14 @@ var passport = require('passport');
 // =====================================
 router.post('/login', function(req, res, next){ 
     passport.authenticate("local-login", function(err, user, info) {
+      console.log(user)
+
         if (err) {
           console.log(err)
           return next(err); // will generate a 500 error
         }
-
-        // Generate a JSON response reflecting authentication status
-        // null or undefined
         if (!user) {
+          console.log(user)
           console.log(info)
           return res.json({ success: false, message: info });
         }
@@ -24,7 +24,6 @@ router.post('/login', function(req, res, next){
               console.log("loginerr", loginErr)
               return next(loginErr);
             }
-    
             res.cookie('user_email', user.email );
             res.cookie('authenticated', "true" );
             res.cookie('user_name', user.name );
@@ -41,17 +40,19 @@ router.post('/login', function(req, res, next){
 router.post('/signup', function(req, res, next){ 
     
     passport.authenticate("local-signup", function(err, user, info) {
+      console.log(user)
         if (err) {
           console.log(err)
           return next(err); // will generate a 500 error
         }
         // Generate a JSON response reflecting authentication status
         if (! user) {
+          console.log(user)
           console.log(info)
           return res.send({ success : false, message : info });
         }
     
-        else{
+        else {
           req.login(user, function(loginErr)  {
             if (loginErr) {
               console.log("loginerr", loginErr)
@@ -59,6 +60,7 @@ router.post('/signup', function(req, res, next){
             }
         
             res.cookie('user_email', user.email );
+            res.cookie('user_name', user.name );
             res.cookie('authenticated', "true" );
             res.cookie('user_name', user.name );
     

@@ -26,23 +26,28 @@ module.exports = function (sequelize, DataTypes) {
     },
     likes: {
       type: DataTypes.INTEGER,
-      allowNull: false,
       defaultValue: 0
+    },
+    city:{
+      type: DataTypes.STRING,
+      allowNull: false
     }
   });
 
   Post.associate = function (models) {
-    // Post.belongsTo(models.Blogger, {
-    //   foreignKey: {
-    //     allowNull: false
-    //   }
-    // });
 
     Post.belongsTo(models.Category, {
       foreignKey: {
         allowNull: false
       }
     });
+
+    Post.belongsTo(models.Blogger, {
+      foreignKey: {
+        allowNull: false
+      }
+    });
+    
   };
 
   return Post;
