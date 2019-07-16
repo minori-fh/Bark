@@ -1,5 +1,5 @@
 # Bark
-Bark! Voice what's going on around you on our location based social platform. Our login authentication is ran on the npm<a href="https://www.npmjs.com/package/passport">Passport.</a> To start as the user types in the required fields to sign up or login we check to make sure the inputs are all filled out and valid. We take these values and pass them into the passport into our <a href="http://www.passportjs.org/docs/authenticate/">passport authenticate</a>method.
+Bark! Voice what's going on around you on our location based social platform. Our login authentication is ran on the npm <a href="https://www.npmjs.com/package/passport">Passport.</a> To start as the user types in the required fields to sign up or login we check to make sure the inputs are all filled out and valid. We take these values and pass them into the passport into our <a href="http://www.passportjs.org/docs/authenticate/">passport authenticate</a> method. Here we check if the email has been taken already, if not we stroe the users information as cookies.
 
 ## Perquisites
 
