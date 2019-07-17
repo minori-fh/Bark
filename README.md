@@ -14,6 +14,8 @@ The app was created for:
 This site was deployed using Heroku with the JawsDB add-on. Our repo is based on a MVC (models views controllers) framework for easier maintenance and future scalability. 
 
 ## Pictures of Site
+[Click here to visit site](https://barkbark.herokuapp.com/)
+
 Initial login page: 
 ![Loading page Screenshot](public/assets/images/login.gif)
 Making a post: 
