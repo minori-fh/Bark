@@ -5,27 +5,21 @@
 
 The app was created for: 
 
-    The Commuter: individuals on their commute looking to find out what's going on in their area
+1. The Commuter: individuals on their commute looking to find out what's going on in their area
 
-    The Influencer: An individual who has a following in a particular niche and is looking to engage with his/ her followers
+2. The Influencer: An individual who has a following in a particular niche and is looking to engage with his/ her followers
 
-    The Fan: Interacting with people of similar interests and seeing the posts of their favorite influencers
+3. The Fan: Interacting with people of similar interests and seeing the posts of their favorite influencers
 
-
-### Logic
-
+This site was deployed using Heroku with the JawsDB add-on. Our repo is based on a MVC (models views controllers) framework for easier maintenance and future scalability. 
 
 ## Pictures of Site
-Initial loading page: 
-![Loading page Screenshot](assets/Images/site-1.png)
-Page for the user to make two choices:
-1.) Do they want to drink alcohol or coffee?
-2.) What's most important to them: price or location? 
-![Introduction scene Screenshot](assets/Images/site-2.gif)
-Page for the user to go through 3 sets of two options
-![Battlescene Screenshot](assets/Images/site-4.png)
-Page for the user to see where their options are located
-![Battlescene Screenshot](assets/Images/site-5.png)
+Initial login page: 
+![Loading page Screenshot](public/assets/images/login.gif)
+Making a post: 
+![Introduction scene Screenshot](public/assets/images/post.gif)
+Profile page: 
+![Battlescene Screenshot](public/assets/images/profile.gif)
 
 ## Technologies Used
 1. HTML 
@@ -33,9 +27,19 @@ Page for the user to see where their options are located
 3. Bootstrap
 4. Javascript
 5. jQuery
-6. AJAX calls for Google Maps and Yelp API
-7. Codepen and animista libraries
-8. Firebase
+6. Open Weather Map Widget
+8. Node*
+
+## *Node Packages Used
+1. Express
+2. Express-session
+3. Passport
+4. Passport-local
+5. Bcrypt
+5. MySQL2
+6. Moment
+7. Dotenv
+8. Sequelize
 
 ## Author(s): 
 1. [Minori Hashimoto](https://github.com/minori-fh)
