@@ -8,7 +8,6 @@ module.exports = {
             },
             include: [db.Blogger]
         }).then(function (dbPost) {
-            console.log("WTF");
             res.json(dbPost);
         });
     },
@@ -79,6 +78,13 @@ module.exports = {
         }).then(function (dbPost) {
             res.json(dbPost);
         });
+    },
+    searchAllPosts: function (req, res){
+        db.Post.findAll({
+            where: {
+
+            }
+        })
     }
 };
 

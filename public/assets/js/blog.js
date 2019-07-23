@@ -233,3 +233,54 @@ $(document).ready(function () {
     $("#category-" + selectionId).css("background-image", "url(assets/images/nav_bg.png)");
   }
 });
+
+function searchPosts(input){
+  if (input !== undefined){
+    console.log("not undefined!")
+    // $.get("/api/post/searchAll/" + input, function(data))
+  } else {
+    console.log("undefined!!!")
+  }
+}
+
+$("#search").on("click", function(){
+  var input = $("#input").val()
+  console.log(input)
+
+  searchPosts(input)
+  // $.get('/api/post/searchAll/', input, function(response){
+  //     if(response){
+  //         location.reload();
+  //     }
+  // });
+});
+
+function getPosts(categoryId) {
+
+  if (categoryId !== undefined) {
+    $.get("/api/post/" + cityName + "/category/" + categoryId, function (data) {
+      console.log("Posts", data);
+      posts = data;
+      if (!posts || !posts.length) {
+        displayEmpty();
+      }
+      else {
+        initializeRows(posts);
+      }
+    });
+  }
+
+  else {
+    $.get("/api/post/" + cityName, function (data) {
+      console.log("Posts", data);
+      posts = data;
+      if (!posts || !posts.length) {
+        displayEmpty();
+      }
+      else {
+        initializeRows(posts);
+      }
+    });
+  }
+}
+
