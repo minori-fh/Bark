@@ -243,7 +243,7 @@ function searchPosts(input){
   }
 }
 
-$("#search").on("click", function(event){
+$(".search").on("click", function(event){
   event.preventDefault();
   var input = $("#input").val()
   console.log(input)
@@ -255,6 +255,15 @@ $("#search").on("click", function(event){
   //     }
   // });
 });
+
+// $(document).on('click', "#search", function (event) {
+//   event.preventDefault();
+//   var input = $("#input").val()
+//   console.log(input)
+
+//   searchPosts(input)
+
+// });
 
 function getPosts(categoryId) {
 
