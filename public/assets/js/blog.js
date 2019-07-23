@@ -243,7 +243,8 @@ function searchPosts(input){
   }
 }
 
-$("#search").on("click", function(){
+$("#search").on("click", function(event){
+  event.preventDefault();
   var input = $("#input").val()
   console.log(input)
 
